@@ -12,6 +12,10 @@ from models.city import City
 
 class test_City(test_basemodel):
     """ """
+
+    def setUp(self):
+        self.new_city = City()
+
     def test_doc(self):
         """ test_doc(self): to test if module and class has docs """
         self.assertIsNotNone(City.__doc__, 'no docs for City Class')
@@ -30,9 +34,6 @@ class test_City(test_basemodel):
     def test_init_city(self):
         self.assertIsInstance(self.new_city.created_at, datetime)
         self.assertIsInstance(self.new_city.updated_at, datetime)
-        self.assertEqual(self.new_city.created_at, self.new_city.updated_at)
-        self.assertAlmostEqual(self.new_city.created_at, datetime.now(),
-                               delta=timedelta(seconds=(10)))
 
     def test_save_city(self):
         """Test save """

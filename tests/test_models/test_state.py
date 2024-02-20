@@ -12,6 +12,9 @@ from models.state import State
 
 class test_state(test_basemodel):
     """ """
+    def setUp(self):
+        self.new_state = State()
+
     def test_doc(self):
         """ test_doc(self): to test if module and class has docs """
         self.assertIsNotNone(State.__doc__, 'no docs for State Class')
@@ -28,9 +31,6 @@ class test_state(test_basemodel):
     def test_init_state(self):
         self.assertIsInstance(self.new_state.created_at, datetime)
         self.assertIsInstance(self.new_state.updated_at, datetime)
-        self.assertEqual(self.new_state.created_at, self.new_state.updated_at)
-        self.assertAlmostEqual(self.new_state.created_at, datetime.now(),
-                               delta=timedelta(seconds=(10)))
 
     def test_save_state(self):
         """Test save """

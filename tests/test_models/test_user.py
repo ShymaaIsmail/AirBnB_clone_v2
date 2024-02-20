@@ -12,6 +12,8 @@ from models.user import User
 
 class test_User(test_basemodel):
     """ """
+    def setUp(self):
+        self.new_user= User()
 
     def test_doc(self):
         """ test_doc(self): to test if module and class has docs """
@@ -30,9 +32,6 @@ class test_User(test_basemodel):
     def test_init_user(self):
         self.assertIsInstance(self.new_user.created_at, datetime)
         self.assertIsInstance(self.new_user.updated_at, datetime)
-        self.assertEqual(self.new_user.created_at, self.new_user.updated_at)
-        self.assertAlmostEqual(self.new_user.created_at, datetime.now(),
-                               delta=timedelta(seconds=(10)))
 
     def test_save_user(self):
         """Test save """

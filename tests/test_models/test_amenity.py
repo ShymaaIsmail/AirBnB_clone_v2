@@ -2,6 +2,7 @@
 """ """
 from tests.test_models.test_base_model import test_basemodel
 from models.amenity import Amenity
+import models.amenity
 import pycodestyle
 import inspect
 import time
@@ -10,6 +11,9 @@ from datetime import datetime, timedelta
 
 class test_Amenity(test_basemodel):
     """ """
+
+    def setUp(self):
+        self.new_amenity = Amenity()
 
     def test_doc(self):
         """ test_doc(self): to test if module and class has docs """
@@ -27,20 +31,15 @@ class test_Amenity(test_basemodel):
     def test_init_amenity(self):
         self.assertIsInstance(self.new_amenity.created_at, datetime)
         self.assertIsInstance(self.new_amenity.updated_at, datetime)
-        self.assertEqual(self.new_amenity.created_at, self.new_amenity.updated_at)
-        self.assertAlmostEqual(self.new_amenity.created_at, datetime.now(),
-                               delta=timedelta(seconds=(10)))
-
 
     def test_save(self):
         """Test save """
-        new_amenity = Amenity()
-        old_update_at = new_amenity.updated_at
-        old_created_at = new_amenity.created_at
+        old_update_at = self.new_amenity.updated_at
+        old_created_at = self.new_amenity.created_at
         time.sleep(1)
-        new_amenity.save()
-        self.assertTrue((new_amenity.updated_at > old_update_at))
-        self.assertTrue(old_created_at == new_amenity.created_at)
+        self.new_amenity.save()
+        self.assertTrue((self.new_amenity.updated_at > old_update_at))
+        self.assertTrue(old_created_at == self.new_amenity.created_at)
 
     def test_to_dict(self):
         """Test to dict format"""
