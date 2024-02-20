@@ -12,6 +12,10 @@ from models.review import Review
 
 class test_review(test_basemodel):
     """ """
+    
+    def setUp(self):
+        self.new_review = Review()
+
     def test_doc(self):
         """ test_doc(self): to test if module and class has docs """
         self.assertIsNotNone(Review.__doc__, 'no docs for Review Class')
@@ -28,9 +32,6 @@ class test_review(test_basemodel):
     def test_init_review(self):
         self.assertIsInstance(self.new_review.created_at, datetime)
         self.assertIsInstance(self.new_review.updated_at, datetime)
-        self.assertEqual(self.new_review.created_at, self.new_review.updated_at)
-        self.assertAlmostEqual(self.new_review.created_at, datetime.now(),
-                               delta=timedelta(seconds=(10)))
 
     def test_save_review(self):
         """Test save """

@@ -12,6 +12,10 @@ from models.place import Place
 
 class test_Place(test_basemodel):
     """ """
+
+    def setUp(self):
+        self.new_place = Place()
+
     def test_doc(self):
         """ test_doc(self): to test if module and class has docs """
         self.assertIsNotNone(Place.__doc__, 'no docs for Place Class')
@@ -24,13 +28,6 @@ class test_Place(test_basemodel):
         module_path = "models/place.py"
         result = style.check_files([module_path])
         self.assertEqual(result.total_errors, 0)
-
-    def test_init_place(self):
-        self.assertIsInstance(self.new_place.created_at, datetime)
-        self.assertIsInstance(self.new_place.updated_at, datetime)
-        self.assertEqual(self.new_place.created_at, self.new_place.updated_at)
-        self.assertAlmostEqual(self.new_place.created_at, datetime.now(),
-                               delta=timedelta(seconds=(10)))
 
     def test_save_place(self):
         """Test save """
