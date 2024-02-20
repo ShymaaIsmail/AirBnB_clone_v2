@@ -83,7 +83,7 @@ class DBStorage:
         Return: return_description
         """
         if obj:
-            self.__session.add()
+            self.__session.add(obj)
 
     def save(self):
         """_summary_
