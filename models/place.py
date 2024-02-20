@@ -7,10 +7,15 @@ from os import getenv
 from sqlalchemy.orm import relationship
 
 storage_type = getenv("HBNB_TYPE_STORAGE")
-place_amenity = Table('place_amenity', Base.metadata,
-        Column('place_id', String(60), ForeignKey('places.id'), primary_key=True, nullable=False),
-        Column('amenity_id', String(60), ForeignKey('amenities.id'), primary_key=True, nullable=False))
-    
+place_amenity = Table(
+    'place_amenity',
+    Base.metadata,
+    Column('place_id', String(60), ForeignKey('places.id'),
+           primary_key=True, nullable=False),
+    Column('amenity_id', String(60), ForeignKey('amenities.id'),
+           primary_key=True, nullable=False)
+)
+
 
 class Place(BaseModel, Base):
     """ A place to stay """
@@ -26,7 +31,8 @@ class Place(BaseModel, Base):
         price_by_night = Column(Integer, nullable=False, default=0)
         latitude = Column(Float, nullable=True)
         longitude = Column(Float, nullable=True)
-        amenities = relationship("Amenity", secondary="place_amenity", viewonly=False)
+        amenities = relationship("Amenity", secondary="place_amenity",
+                                 viewonly=False)
     else:
         city_id = ""
         user_id = ""
@@ -39,9 +45,10 @@ class Place(BaseModel, Base):
         latitude = 0.0
         longitude = 0.0
         amenity_ids = []
+
         @property
         def amenities(self):
-            """ Getter attribute amenities """
+            """ Get amenities """
             from models import storage
             amenity_objs = []
             for amenity_id in self.amenity_ids:
@@ -52,6 +59,6 @@ class Place(BaseModel, Base):
 
         @amenities.setter
         def amenities(self, obj):
-            """ Setter attribute amenities """
+            """ Set amenities """
             if isinstance(obj, Amenity):
                 self.amenity_ids.append(obj.id)
