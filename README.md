@@ -234,7 +234,7 @@ mandatory
 SQLAlchemy will be your best friend!
 
 It’s time to change your storage engine and use `SQLAlchemy`
-![[daaef631636b40e0a279a8f240703e065f9d3481.jpg]]
+![daaef631636b40e0a279a8f240703e065f9d3481](https://github.com/3zzazakl/alx-higher_level_programming/assets/140283548/49abad63-2dbc-4348-807f-8a41604b05ba)
 In the following steps, you will make multiple changes:
 
 - the biggest one is the transition between `FileStorage` and `DBStorage`: In the industry, you will never find a system who can work with both in the same time - but you will find a lot of services who can manage multiple storage systems. (for example, logs service: in memory, in disk, in database, in ElasticSearch etc…) - The main concept behind is the **abstraction**: Make your code running without knowing how it’s stored.
