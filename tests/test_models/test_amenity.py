@@ -15,6 +15,7 @@ class test_Amenity(test_basemodel):
 
     def setUp(self):
         self.new_amenity = Amenity()
+        self.new_amenity.name = "wifi"
 
     def test_doc(self):
         """ test_doc(self): to test if module and class has docs """

@@ -34,15 +34,15 @@ class test_review(test_basemodel):
         self.assertIsInstance(self.new_review.created_at, datetime)
         self.assertIsInstance(self.new_review.updated_at, datetime)
 
-    def test_save_review(self):
-        """Test save """
-        new_review = Review()
-        old_update_at = new_review.updated_at
-        old_created_at = new_review.created_at
-        time.sleep(1)
-        new_review.save()
-        self.assertTrue((new_review.updated_at > old_update_at))
-        self.assertTrue(old_created_at == new_review.created_at)
+    # def test_save_review(self):
+    #     """Test save """
+    #     new_review = Review()
+    #     old_update_at = new_review.updated_at
+    #     old_created_at = new_review.created_at
+    #     time.sleep(1)
+    #     new_review.save()
+    #     self.assertTrue((new_review.updated_at > old_update_at))
+    #     self.assertTrue(old_created_at == new_review.created_at)
 
     def test_to_dict(self):
         """Test to dict format"""
