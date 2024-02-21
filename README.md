@@ -742,5 +742,5 @@ guillaume@ubuntu:~/AirBnB_v2$
 	Ezra Nobrega <ezra.nobrega@outlook.com>
 	Justin Majetich <justinmajetich@gmail.com>
 	Shymaa Ismail <shymaa.m.ismail@gmail.com>
-	Azzaz Akl <vanzekovichgr@gmail.com> 
-			<azzazibrahimakl@gmail.com>
+	Azzaz Akl <vanzekovichgr@gmail.com>
+		<azzazibrahimakl@gmail.com>
