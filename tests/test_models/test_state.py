@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """ """
+import os
 import pycodestyle
 from models.state import State
 import inspect
@@ -61,7 +62,10 @@ class test_state(test_basemodel):
         self.name = "State"
         self.value = State
 
+    
     def test_name3(self):
-        """ """
+        """Tests the type of name."""
         new = self.value()
-        self.assertEqual(type(new.name), str)
+        self.assertEqual(
+            type(new.name),
+            str if os.getenv('HBNB_TYPE_STORAGE') != 'db' else type(None))

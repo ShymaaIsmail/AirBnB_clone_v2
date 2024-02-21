@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """ """
+import os
 import pycodestyle
 from models.state import State
 import inspect
@@ -62,16 +63,24 @@ class test_review(test_basemodel):
         self.value = Review
 
     def test_place_id(self):
-        """ """
+        """Tests the type of place_id."""
         new = self.value()
-        self.assertEqual(type(new.place_id), str)
+        self.assertEqual(
+            type(new.place_id),
+            str if os.getenv('HBNB_TYPE_STORAGE') != 'db' else type(None)
+        )
 
     def test_user_id(self):
-        """ """
+        """Tests the type of user_id."""
         new = self.value()
-        self.assertEqual(type(new.user_id), str)
+        self.assertEqual(
+            type(new.user_id),
+            str if os.getenv('HBNB_TYPE_STORAGE') != 'db' else type(None)
+        )
 
     def test_text(self):
-        """ """
+        """Tests the type of text."""
         new = self.value()
-        self.assertEqual(type(new.text), str)
+        self.assertEqual(
+            type(new.text),
+            str if os.getenv('HBNB_TYPE_STORAGE') != 'db' else type(None))
