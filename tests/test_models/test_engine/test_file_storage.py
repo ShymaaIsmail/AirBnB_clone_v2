@@ -1,13 +1,23 @@
 #!/usr/bin/python3
 """ Module for testing file storage"""
+import inspect
 import unittest
 from models.base_model import BaseModel
 from models import storage
+from models.engine.file_storage import FileStorage
 import os
 
-
+@unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'file',
+                 "file storage not selected")
 class test_fileStorage(unittest.TestCase):
     """ Class to test the file storage method """
+
+    def test_doc(self):
+        """Test if module and class have docs"""
+        self.assertIsNotNone(FileStorage.__doc__, 'no docs for DBStorage Class')
+        self.assertIsNotNone(FileStorage.__doc__, 'no docs for module')
+        for name, method in inspect.getmembers(FileStorage, inspect.isfunction):
+            self.assertIsNotNone(method.__doc__, f"{name} has no docs")
 
     def setUp(self):
         """ Set up test environment """

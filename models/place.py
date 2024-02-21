@@ -33,6 +33,7 @@ class Place(BaseModel, Base):
         longitude = Column(Float, nullable=True)
         amenities = relationship("Amenity", secondary="place_amenity",
                                  viewonly=False)
+        amenity_ids = []
     else:
         city_id = ""
         user_id = ""
