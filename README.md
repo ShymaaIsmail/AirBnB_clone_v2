@@ -742,6 +742,7 @@ guillaume@ubuntu:~/AirBnB_v2$
 	Ezra Nobrega <ezra.nobrega@outlook.com>
 	Justin Majetich <justinmajetich@gmail.com>
 	Shymaa Ismail <shymaa.m.ismail@gmail.com>
-	Azzaz Akl <vanzekovichgr@gmail.com>
-		<azzazibrahimakl@gmail.com>
-        <azzazibrahimakl@outlook.com>
+	Azzaz Akl
+        <vanzekovichgr@gmail.com>
+        <azzazibrahimakl@gmail.com>
+![giphy](https://github.com/3zzazakl/alx-higher_level_programming/assets/140283548/2b726a9d-882b-4e80-9fa7-e20d8591a43d)
