@@ -23,9 +23,9 @@ if grep -q "location /hbnb_static" "$NGINX_CONF"; then
     echo "Location block already exists. Skipping."
 else
     if grep -q "location / {" "$NGINX_CONF"; then
-        sed -i "/location \/ {/a $(echo $NEW_LOCATION | sed 's/\//\\\//g')" "$NGINX_CONF"
+        sed -i "/location \/ {/a $(echo "$NEW_LOCATION" | sed 's/\//\\\//g')" "$NGINX_CONF"
     else
-        sed -i "/server {/a $(echo $NEW_LOCATION | sed 's/\//\\\//g')" "$NGINX_CONF"
+        sed -i "/server {/a $(echo "$NEW_LOCATION" | sed 's/\//\\\//g')" "$NGINX_CONF"
     fi
     echo "New location block added successfully."
 fi
