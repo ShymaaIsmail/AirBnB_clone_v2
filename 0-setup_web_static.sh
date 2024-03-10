@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+
 # SETUP WEB STATIC
 apt-get -y update
 apt-get -y install nginx
@@ -11,22 +12,11 @@ echo "<html>
             Holberton School
         </body>
     </html>" > "/data/web_static/releases/test/index.html"
-ln -s -f  /data/web_static/releases/test/ /data/web_static/current
-chown  -R ubuntu:ubuntu /data/
+ln -s -f /data/web_static/releases/test/ /data/web_static/current
+chown -R ubuntu:ubuntu /data/
+
 NGINX_CONF="/etc/nginx/sites-available/default"
-NEW_LOCATION="
- location /hbnb_static {
-        alias /data/web_static/current;
-        index index.html index.htm;
-}"
-if grep -q "location /hbnb_static" "$NGINX_CONF"; then
-    echo "Location block already exists. Skipping."
-else
-    if grep -q "location / {" "$NGINX_CONF"; then
-        sed -i "/location \/ {/a $(echo "$NEW_LOCATION" | sed 's/\//\\\//g')" "$NGINX_CONF"
-    else
-        sed -i "/server {/a $(echo "$NEW_LOCATION" | sed 's/\//\\\//g')" "$NGINX_CONF"
-    fi
-    echo "New location block added successfully."
-fi
+search_text="location \/"
+line_number=$(( $(sed -n "/$search_text/=" $NGINX_CONF | head -n 1) - 1 ))
+sudo sed -i "${line_number}s/.*/\\tlocation \/hbnb_static {\n\t\talias \/data\/web_static\/current;\n\t\ttry_files \$uri \$uri\/ =404;\n\t}/" $NGINX_CONF
 service nginx restart
