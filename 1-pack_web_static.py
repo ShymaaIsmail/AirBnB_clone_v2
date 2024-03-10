@@ -6,8 +6,10 @@ from datetime import datetime
 import os
 
 def do_pack():
-    """Packs content of web static folder into tgz archive
-       Returns: archive_path
+    """
+    Packs content of web static folder into tgz archive
+    Returns:
+        str: archive_path
     """
     archive_path = None
     dest_folder = "versions"
