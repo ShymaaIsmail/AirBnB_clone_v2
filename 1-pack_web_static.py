@@ -5,8 +5,7 @@ from fabric.operations import local
 from datetime import datetime
 import os
 
-@task
-def do_pack(c):
+def do_pack():
     """Packs content of web static folder into tgz archive"""
     archive_path = None
     dest_folder = "versions"
