@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 # SETUP WEB STATIC
 apt-get -y update
 apt-get -y install nginx
