@@ -1,14 +1,16 @@
 #!/usr/bin/python3
 """
-    Packing the web static folder in a tgz compressed file
+Packing the web static folder in a tgz
+compressed file
 """
-from fabric import task
 from fabric.operations import local
 from datetime import datetime
 import os
 
 def do_pack():
-    """Packs content of web static folder into tgz archive"""
+    """
+        Packs content of web static folder into tgz archive
+    """
     archive_path = None
     src_folder = "webstatic"
     dest_folder = "versions"
