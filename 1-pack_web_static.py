@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-"""Packing the web static"""
+"""
+    Packing the web static folder in a tgz compressed file
+"""
 from fabric import task
 from fabric.operations import local
 from datetime import datetime
@@ -12,6 +14,7 @@ def do_pack():
         str: archive_path
     """
     archive_path = None
+    src_folder = "webstatic"
     dest_folder = "versions"
     now = datetime.now()
     time_stamp = f"{now.year}{now.month}{now.day}{now.hour} \
@@ -21,7 +24,7 @@ def do_pack():
     if not os.path.exists(dest_folder):
         os.makedirs(dest_folder)
     try:
-        local("tar -cvzf {} web_static".format(archive_path))
+        local(f'tar -czf {tar_file_name}.tgz {src_folder}')
         return archive_path
     except Exception as e:
         return None
