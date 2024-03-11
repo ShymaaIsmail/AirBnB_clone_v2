@@ -3,11 +3,9 @@
 import os.path
 from fabric.api import put, run, env
 from os.path import exists
-
-
 # Define your host(s)
 env.hosts = ['54.160.107.3', '52.3.245.179']
-
+env.user = 'ubuntu'
 
 def do_deploy(archive_path):
     """Connect to remote server and push the archive file"""
