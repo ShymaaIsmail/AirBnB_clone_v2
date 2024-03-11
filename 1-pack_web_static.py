@@ -8,15 +8,11 @@ from datetime import datetime
 import os
 
 def do_pack():
-    """
-    Packs content of web static folder into tgz archive
-    Returns:
-        str: archive_path
-    """
+    """Packs content of web static folder into tgz archive"""
     archive_path = None
     src_folder = "webstatic"
     dest_folder = "versions"
-    now = datetime.now()
+    now = datetime.now()	
     time_stamp = f"{now.year}{now.month}{now.day}{now.hour} \
                     {now.minute}{now.second}"
     tar_file_name = f"web_static_{time_stamp}.tgz"
