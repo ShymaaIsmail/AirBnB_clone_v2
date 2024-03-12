@@ -10,8 +10,8 @@ env.user = "ubuntu"
 def do_clean(number=0):
     """ clean old versions """
     number = int(number)
-    if number == 0:
-        number = 2
+    if number < 2:
+        number = 1
     else:
         number += 1
     local('cd versions ; ls -t | tail -n +{} | xargs rm -rf'.format(number))
