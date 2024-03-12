@@ -28,3 +28,7 @@ def do_deploy(archive_path):
             return True
         except Exception as e:
             raise e
+
+
+if __name__ == "__main__":
+    do_deploy()

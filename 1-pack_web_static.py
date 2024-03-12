@@ -18,5 +18,9 @@ def do_pack():
         file_name = "versions/web_static_{}.tgz".format(date)
         local("tar -cvzf {} web_static".format(file_name))
         return file_name
-    except:
+    except Exception as e:
         return None
+
+
+if __name__ == "__main__":
+    do_pack()

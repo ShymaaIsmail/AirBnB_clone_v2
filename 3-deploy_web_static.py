@@ -1,7 +1,11 @@
 #!/usr/bin/python3
 """Full Deployment includes pack and deployment"""
+from fabric.api import env
 do_pack = __import__('1-pack_web_static').do_pack
 do_deploy = __import__('2-do_deploy_web_static').do_deploy
+
+env.hosts = ['54.160.107.3', '52.3.245.179']
+env.user = 'ubuntu'
 
 
 def deploy():
