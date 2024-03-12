@@ -1,17 +1,18 @@
 #!/usr/bin/python3
 """
-Fabric script based on the file 2-do_deploy_web_static.py that creates and
-distributes an archive to the web servers
+Fabric script that creates and distributes an archive to multiple web servers
 """
 
 from fabric.api import env, local, put, run
 from datetime import datetime
 from os.path import exists, isdir
-env.hosts = ['54.160.107.3', '52.3.245.179']
 
+# Define the list of hosts
+env.hosts = ['54.160.107.3', '52.3.245.179']
+env.user = 'ubuntu'
 
 def do_pack():
-    """generates a tgz archive"""
+    """Generates a tgz archive"""
     try:
         date = datetime.now().strftime("%Y%m%d%H%M%S")
         if isdir("versions") is False:
@@ -19,14 +20,16 @@ def do_pack():
         file_name = "versions/web_static_{}.tgz".format(date)
         local("tar -cvzf {} web_static".format(file_name))
         return file_name
-    except:
+    except Exception as e:
+        print("Error occurred during packing:", e)
         return None
 
-
 def do_deploy(archive_path):
-    """distributes an archive to the web servers"""
+    """Distributes an archive to the web servers"""
     if exists(archive_path) is False:
+        print("Archive does not exist:", archive_path)
         return False
+    
     try:
         file_n = archive_path.split("/")[-1]
         no_ext = file_n.split(".")[0]
@@ -40,13 +43,28 @@ def do_deploy(archive_path):
         run('rm -rf /data/web_static/current')
         run('ln -s {}{}/ /data/web_static/current'.format(path, no_ext))
         return True
-    except:
+    except Exception as e:
+        print("Error occurred during deployment:", e)
         return False
-
 
 def deploy():
-    """creates and distributes an archive to the web servers"""
+    """Creates and distributes an archive to the web servers"""
     archive_path = do_pack()
     if archive_path is None:
+        print("Failed to create archive")
         return False
-    return do_deploy(archive_path)
+    
+    for host in env.hosts:
+        env.host_string = host
+        print(f"Deploying to {host}")
+        success = do_deploy(archive_path)
+        if not success:
+            print(f"Failed to deploy to {host}")
+            return False
+    
+    print("Deployment successful")
+    return True
+
+# Call deploy function when the script is executed directly
+if __name__ == "__main__":
+    deploy()
