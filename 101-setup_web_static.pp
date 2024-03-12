@@ -1,77 +1,91 @@
-# Puppet manifest for setting up web static
-  package { 'nginx':
-    ensure => installed,
-  }
-  file { '/data':
-    ensure  => 'directory',
-  }
+# Configures a web server for deployment of web_static.
 
-  file { '/data/web_static':
-    ensure => 'directory',
-  }
+# Nginx configuration file
+$nginx_conf = "server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    add_header X-Served-By ${hostname};
+    root   /var/www/html;
+    index  index.html index.htm;
 
-  file { '/data/web_static/releases':
-    ensure => 'directory',
-  }
+    location /hbnb_static {
+        alias /data/web_static/current;
+        index index.html index.htm;
+    }
 
-  file { '/data/web_static/releases/test':
-    ensure => 'directory',
-  }
+    location /redirect_me {
+        return 301 http://cuberule.com/;
+    }
 
-  file { '/data/web_static/shared':
-    ensure => 'directory',
-  }
-  file { '/data/web_static/releases/test/':
-    ensure  => directory,
-    mode    => '0755',
-    owner   => 'ubuntu',
-    group   => 'ubuntu',
-    recurse => true,
-  }
+    error_page 404 /404.html;
+    location /404 {
+      root /var/www/html;
+      internal;
+    }
+}"
 
-  file { '/data/web_static/shared/':
-    ensure => directory,
-    mode   => '0755',
-    owner  => 'ubuntu',
-    group  => 'ubuntu',
-  }
+package { 'nginx':
+  ensure   => 'present',
+  provider => 'apt'
+} ->
 
-  file { '/data/web_static/releases/test/index.html':
-    ensure  => present,
-    content => '<html>
-                    <head>
-                    </head>
-                    <body>
-                        Holberton School
-                    </body>
-                </html>',
-    mode    => '0644',
-    owner   => 'ubuntu',
-    group   => 'ubuntu',
-  }
+file { '/data':
+  ensure  => 'directory'
+} ->
 
-  file { '/data/web_static/current':
-    ensure => link,
-    target => '/data/web_static/releases/test/',
-    owner  => 'ubuntu',
-    group  => 'ubuntu',
-  }
+file { '/data/web_static':
+  ensure => 'directory'
+} ->
 
-  $nginx_config = '/etc/nginx/sites-available/default'
-  $search_text = 'location /'
-  $line_number = inline_template("<%= @(file(\"${nginx_config}\").split(\"\\n\").index { |line| line.include?(\"${search_text}\") } + 1) %>")
-  file_line { 'nginx_hbnb_static':
-    path  => $nginx_config,
-    line  => "location /hbnb_static {\n
-              alias /data/web_static/current;\n
-              try_files \$uri \$uri/ =404;\n
-              }",
-    match => "^\\s*location /",
-    after => $line_number,
-  }
+file { '/data/web_static/releases':
+  ensure => 'directory'
+} ->
 
-  service { 'nginx':
-    ensure    => running,
-    enable    => true,
-    subscribe => File_line['nginx_hbnb_static'],
-  }
+file { '/data/web_static/releases/test':
+  ensure => 'directory'
+} ->
+
+file { '/data/web_static/shared':
+  ensure => 'directory'
+} ->
+
+file { '/data/web_static/releases/test/index.html':
+  ensure  => 'present',
+  content => "Holberton School Puppet\n"
+} ->
+
+file { '/data/web_static/current':
+  ensure => 'link',
+  target => '/data/web_static/releases/test'
+} ->
+
+exec { 'chown -R ubuntu:ubuntu /data/':
+  path => '/usr/bin/:/usr/local/bin/:/bin/'
+}
+
+file { '/var/www':
+  ensure => 'directory'
+} ->
+
+file { '/var/www/html':
+  ensure => 'directory'
+} ->
+
+file { '/var/www/html/index.html':
+  ensure  => 'present',
+  content => "Holberton School Nginx\n"
+} ->
+
+file { '/var/www/html/404.html':
+  ensure  => 'present',
+  content => "Ceci n'est pas une page\n"
+} ->
+
+file { '/etc/nginx/sites-available/default':
+  ensure  => 'present',
+  content => $nginx_conf
+} ->
+
+exec { 'nginx restart':
+  path => '/etc/init.d/'
+}
