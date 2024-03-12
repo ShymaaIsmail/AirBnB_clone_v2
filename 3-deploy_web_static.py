@@ -11,7 +11,7 @@ env.user = 'ubuntu'
 def deploy():
     """Full Deployment calling do_pack and do_deploy"""
     archive_path = do_pack()
-    if archive_path is None:
+    if not archive_path:
         return False
     else:
         return do_deploy(archive_path)
