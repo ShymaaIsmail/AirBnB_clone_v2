@@ -14,7 +14,7 @@ def hello_hbnb():
 @app.route("/hbnb", strict_slashes=False)
 def hbnb_only():
     """HBNB Message"""
-    return "HBNB!"
+    return "HBNB"
 
 
 if __name__ == "__main__":
