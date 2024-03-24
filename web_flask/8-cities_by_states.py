@@ -14,6 +14,7 @@ def states_list():
     return render_template("7-states_list.html", states=states)
 
 
+
 @app.teardown_appcontext
 def close_app(exception):
     """close session"""
