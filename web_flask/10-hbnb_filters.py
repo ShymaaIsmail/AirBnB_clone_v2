@@ -2,7 +2,6 @@
 """ Hello Route as a Basic usage for flask routing"""
 
 
-from os import getenv
 from flask import Flask, render_template
 from models import storage
 from models.city import City
@@ -24,18 +23,15 @@ def states_list():
     return render_template("7-states_list.html", states=states)
 
 
-@app.route("/states/<id>", strict_slashes=False)
-def states_by_id(id=None):
-    """List state by id"""
+@app.route("/hbnb_filters", strict_slashes=False)
+def hbnb_filters(id=None):
+    """hbnb filters states and cities"""
     states = storage.all(State)
     state = next(filter(lambda state: state.id == id, states.values()), None)
     cities = None
-    storage_type = getenv("HBNB_TYPE_STORAGE")
-    if state:
-        if storage_type == "db":
-            cities = state.cities
-        else:
-            cities = state.cities()
+    if id:
+        all_cities = storage.all(City)
+        cities = [city for city in all_cities.values() if city.state_id == id]
     return render_template('9-states.html', state=state, cities=cities)
 
 
