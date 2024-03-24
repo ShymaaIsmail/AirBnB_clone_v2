@@ -11,7 +11,11 @@ app = Flask(__name__)
 def states_list():
     """List All States"""
     states = storage.all(State)
-    return render_template("7-states_list.html", states=states)
+    # Convert dictionary values to list
+    states_list = list(states.values())
+    # Sort the list by state name
+    sorted_states = sorted(states_list, key=lambda state: state.name)
+    return render_template("7-states_list.html", states=sorted_states)
 
 
 @app.teardown_appcontext
