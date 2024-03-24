@@ -7,9 +7,8 @@ from models.state import State
 app = Flask(__name__)
 
 
-
 @app.teardown_appcontext
-def close_app(exception=None):
+def close_app(exception):
     """close session"""
     storage.close()
 
