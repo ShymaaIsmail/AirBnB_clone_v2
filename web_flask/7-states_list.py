@@ -1,5 +1,8 @@
 #!/usr/bin/python3
-""" Hello Route as a Basic usage for flask routing"""
+"""
+Starts a Flask web application
+"""
+
 from flask import Flask, render_template
 from models import storage
 from models.state import State
@@ -7,19 +10,18 @@ from models.state import State
 app = Flask(__name__)
 
 
-@app.route("/states_list", strict_slashes=False)
+@app.route('/states_list', strict_slashes=False)
 def states_list():
-    """List All States"""
+    """Display a list of all State objects sorted by name (A->Z)"""
     states = sorted(storage.all(State).values(), key=lambda state: state.name)
-    return render_template("7-states_list.html", states=states)
+    return render_template('7-states_list.html', states=states)
 
 
 @app.teardown_appcontext
-def close_app(exception):
-    """close session after close app"""
+def teardown_db(exception):
+    """Closes the storage on teardown"""
     storage.close()
 
 
 if __name__ == "__main__":
-    storage.reload()
     app.run(host='0.0.0.0', port=5000)
