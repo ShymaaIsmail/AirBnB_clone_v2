@@ -7,21 +7,19 @@ from models.state import State
 app = Flask(__name__)
 
 
-@app.route("/states_list", strict_slashes=False)
-def states_list():
-    """List All States"""
-    states = storage.all(State)
-    # Convert dictionary values to list
-    states_list = list(states.values())
-    # Sort the list by state name
-    sorted_states = sorted(states_list, key=lambda state: state.name)
-    return render_template("7-states_list.html", states=sorted_states)
-
 
 @app.teardown_appcontext
 def close_app(exception=None):
-    """clse session"""
+    """close session"""
     storage.close()
+
+
+@app.route("/states_list", strict_slashes=False)
+def states_list():
+    """List All States"""
+    states = storage.all(State).values()
+    states = sorted(states, key=lambda state: state.name)
+    return render_template("7-states_list.html", states=states)
 
 
 if __name__ == "__main__":
