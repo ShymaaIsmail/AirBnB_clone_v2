@@ -1,5 +1,7 @@
 #!/usr/bin/python3
 """ Hello Route as a Basic usage for flask routing"""
+
+
 from flask import Flask, render_template
 from models import storage
 from models.state import State
@@ -7,7 +9,7 @@ app = Flask(__name__)
 
 
 @app.teardown_appcontext
-def close_app(exception=None):
+def teardown_db(exception=None):
     """close session"""
     storage.close()
 
